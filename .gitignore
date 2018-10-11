@@ -102,3 +102,18 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# nand-push
+.vscode/launch.json
+network-orchestrator/*.retry
+netbox-dot-generator/output.dot
+netbox-dot-generator/snippets.dot
+netbox-joined-inventory/config/netbox_joined_inventory.yml
+network-orchestrator/simulation-run.cfg
+network-orchestrator/config_files
+*.pyc
+.vscode/settings.json
+network-orchestrator/snippets/*
+!network-orchestrator/snippets/example.*
+network-orchestrator/group_vars/*
+!network-orchestrator/group_vars/example.*
