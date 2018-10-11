@@ -1,0 +1,42 @@
+---
+# These are common settings which define the baseline configuration of a CumulusLinux Device #
+##############################################################################################
+
+ansible_user: cumulus # defines what user is used by ansible
+
+# eth0 on each switch is reserved for out of band management. Set geteway to avoid asymmetric routing for management traffic.
+# define the gateway for every oob management network. The variables are used in interfaces.j2 template.
+oob_gateway_dmz: 192.168.70.1 
+oob_gateway_int: 192.168.71.1 
+
+# repo and vagrant interface ips are used in interfaces.j2 template to route traffic to repo through vagrant interface #
+########################################################################################################################
+
+repo_ip: 172.16.70.1
+vagrant_gw: 192.168.121.1
+
+# which additional Debian packages to install on Cumulus switches #
+###################################################################
+
+update_apt_cache: true # runs apt-get update on each switch, takes longer but installation of default packages might fail if this is not set to true
+
+default_packages:
+  - vim
+
+install_etckeeper: true
+
+# apt repos #
+#############
+
+cumulus_repo_file: "config_files/cumulus/sources.list" # definition of sources if you host your own repo
+
+# configure snmp on cumulus devices #
+#####################################
+
+snmp_ro_community: public
+snmp_allowed_hosts: "10.0.0.0/8"
+
+# define bond slaves for peerlink #
+###################################
+
+peerlink_bond_slaves: swp49 swp50 # definition of ports used for peerlinks on each switch. explanation of peer link: https://docs.cumulusnetworks.com/display/CL36/Multi-Chassis+Link+Aggregation+-+MLAG

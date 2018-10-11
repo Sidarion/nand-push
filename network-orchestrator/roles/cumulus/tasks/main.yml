@@ -1,0 +1,10 @@
+- import_tasks: roles/cumulus/tasks/interfaces.yml
+- import_tasks: roles/cumulus/tasks/frr.yml
+- import_tasks: roles/cumulus/tasks/dhcp.yml
+- import_tasks: roles/cumulus/tasks/hosts.yml
+- import_tasks: roles/cumulus/tasks/misc.yml
+- import_tasks: roles/cumulus/tasks/packages.yml
+  tags: packages
+- import_tasks: roles/cumulus/tasks/etckeeper.yml
+  when: install_etckeeper
+  tags: etckeeper

@@ -1,0 +1,22 @@
+# deploy to network simulation
+# ----------------------------
+
+# get raw data from git testing branch
+
+# prepare data
+
+# push raw data from git testing branch
+
+# deploy
+- name: Deploy Cumulus Linux tasks
+  hosts: CumulusLinux
+  gather_facts: no
+  pre_tasks:
+    - setup:
+        gather_subset: min 
+
+    - set_fact:
+        sim_host: "{{ (ansible_cmdline.cl_platform == 'cumulus_vx') | ternary('true','false')  }}"
+  tasks:
+  roles:
+  - cumulus

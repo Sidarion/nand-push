@@ -1,0 +1,22 @@
+---
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: no
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+  when: update_apt_cache
+
+- name: install default packages
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ default_packages }}"
+
+- name: install if_throughput.sh script
+  become: true
+  copy:
+    src: if_throughput.sh
+    dest: /usr/local/bin/if_throughput.sh
+    mode: a+x

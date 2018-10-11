@@ -1,0 +1,29 @@
+---
+- name: install etckeeper and git
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - etckeeper
+
+- name: check etckeeper status
+  stat:
+    path: /etc/.git
+  register: git
+
+- name: inititialize etckeeper
+  become: true
+  command: etckeeper init
+  args:
+    chdir: /etc
+  when: not ( git.stat.isdir is defined and git.stat.isdir )
+  register: initialization
+
+- name: initial etckeeper commit
+  become: true
+  command: etckeeper commit "initial commit"
+  args:
+    chdir: /etc
+  when: initialization is defined and initialization is changed

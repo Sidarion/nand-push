@@ -1,0 +1,34 @@
+# Defaults for isc-dhcp-relay initscript
+# sourced by /etc/init.d/isc-dhcp-relay
+# installed at /etc/default/isc-dhcp-relay by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+# 
+
+# DHCP relay for VRF {{ item.name}}
+
+# What servers should the DHCP relay forward requests to?
+SERVERS="{{ item.dhcp_relay_servers }}"
+
+# On what interfaces should the DHCP relay (dhrelay) serve DHCP requests?
+# Always include the interface towards the DHCP server.
+# This variable requires a -i for each interface configured above.
+# This will be used in the actual dhcrelay command
+# For example, "-i eth0 -i eth1"
+INTF_CMD="{% if item.dhcp_relay_servers != None  %}
+{# configure interfaces that take part in this VRF #}
+{% for i_vlan in configured_vlans %}
+{# hack because i_vlan.dhcp_relay_enabled resulted in key not found #}
+{% for key in i_vlan %}
+{% if key == "dhcp_relay_enabled"  %}
+{# only i_vlan.dhcp_relay_enabled interfaces take part #}
+{% if i_vlan.dhcp_relay_enabled == True %}
+{# hack because i_vlan.vrf resulted in key not found #}
+{% for key2 in i_vlan %}
+{# only interfaces of this VRF take part #}
+{% if key2 == "vrf"  %}
+{% if item.name == i_vlan.vrf  %} -i vlan{{ i_vlan.vid }}{% endif %}{% endif %}{% endfor %}{% endif %}{% endif %}{% endfor %}{% endfor %}{% endif %}"
+ 
+# Additional options that are passed to the DHCP relay daemon?
+OPTIONS=""

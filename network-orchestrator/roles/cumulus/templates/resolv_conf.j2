@@ -1,0 +1,10 @@
+domain {{ resolv_domain }}
+search {{ resolv_search }}
+{% if sim_host == false -%}
+{% for server in nameservers %}
+nameserver {{ server }}
+{% endfor %}
+{% elif sim_host == true -%}
+nameserver {{ vagrant_gw }}
+{% endif -%}
+

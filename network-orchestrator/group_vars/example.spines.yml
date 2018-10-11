@@ -1,0 +1,3 @@
+---
+bgp_enabled_interfaces: [swp49, swp50, swp51, swp52, swp53, swp54]
+

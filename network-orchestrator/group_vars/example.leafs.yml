@@ -1,0 +1,2 @@
+---
+bgp_enabled_interfaces: [swp51, swp52, peerlink.4094]

@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: run netbox_joined_inventory.py
+    local_action: command python3 netbox-joined-inventory/netbox_joined_inventory.py
+

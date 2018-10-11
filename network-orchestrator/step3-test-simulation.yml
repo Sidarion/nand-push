@@ -1,0 +1,43 @@
+---
+- hosts: all
+  vars:
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ansible@192.168.1.1"'
+  gather_facts: no
+  user: vagrant
+  tasks:
+
+  - name: ping tests outer loop
+    with_items: "{{ ping_tests }}"
+    when: ping_tests is defined
+    raw: ping -c 1 {{ item['destination'] }}
+    register: ping_response
+    failed_when: not ping_response.stdout is search(" 0% packet loss")
+
+  - name: ping negative tests outer loop
+    with_items: "{{ ping_negative_tests }}"
+    when: ping_negative_tests is defined
+    raw: ping -c 1 -i 0.5 {{ item['destination'] }}
+    register: ping_response
+    failed_when: ping_response.stdout is search(" 0% packet loss")
+
+  - name: telnet tests outer loop
+    with_items: "{{ tcp_tests }}"
+    when: tcp_tests is defined
+    raw: echo exit | telnet {{ item['destination'] }} {{ item['port'] }}
+    register: telnet_response
+    failed_when:     telnet_response.stdout is search("Connection refused")
+                 or  telnet_response.stdout is search("Host is unreachable")
+                 or  telnet_response.stdout is search("bad address")
+                 or  telnet_response.stdout != ""
+
+  - name: telnet negative tests outer loop
+    with_items: "{{ tcp_negative_tests }}"
+    when: tcp_negative_tests is defined
+    raw: echo exit | telnet {{ item['destination'] }} {{ item['port'] }}
+    register: telnet_response
+    failed_when: not (
+                     telnet_response.stdout is search("Connection refused")
+                 or  telnet_response.stdout is search("Host is unreachable")
+                 or  telnet_response.stdout is search("bad address")
+                 or  telnet_response.stdout != ""
+                 )

@@ -1,0 +1,6 @@
+{# EXAMPLE #}
+{% if vrf.name == "Management_LAN" %}
+ip route 10.10.200.1/28 192.168.100.1 vrf management_lan
+ip route 10.10.201.1/28 192.168.100.1 vrf management_lan
+ip route 10.10.202.1/28 192.168.100.1 vrf management_lan
+{% endif %}

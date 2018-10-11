@@ -1,0 +1,19 @@
+---
+all:
+  hosts:
+    alpine1:
+      ansible_host: 192.168.121.235
+      ping_tests:
+        - destination: 192.168.121.79
+      ping_negative_tests:
+        - destination: 1.1.1.99
+      tcp_tests:
+        - destination: 192.168.121.79
+          port: 22
+      tcp_negative_tests:
+        - destination: 1.1.1.99
+          port: 223344
+    alpine2:
+      ansible_host: 192.168.121.79
+      ping_tests:
+        - destination: 192.168.121.235

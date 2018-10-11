@@ -1,0 +1,12 @@
+- name: Set dhcp relay configuration for each VRF
+  become: true
+  template:
+    src: isc-dhcp-relay.j2
+    dest: /etc/default/isc-dhcp-relay-{{ item.name | lower }}
+    backup: no
+#  register: dhcrelays_created
+  with_items:  "{{ configured_vrfs }}"
+  notify: 
+    - restart dhcrelay.service
+  tags:
+    - dhcp

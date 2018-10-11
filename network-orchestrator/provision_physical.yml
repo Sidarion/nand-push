@@ -1,0 +1,60 @@
+---
+- hosts: CumulusLinux
+  remote_user: cumulus
+  gather_facts: no
+
+  vars:
+    ansible_become: yes
+    ansible_become_pass: "CumulusLinux!"
+    ansible_user: cumulus
+    ansible_password: "CumulusLinux!"
+    cumulus_license_string: "***"
+    
+
+  vars_prompt:
+
+  - name: "pw"
+    prompt: "Enter new cumulus user password"
+    private: yes
+    encrypt: "sha512_crypt"
+    confirm: yes
+    salt_size: 6
+    
+  tasks:
+
+  - name: set hostname
+    hostname:
+      name: "{{ name|lower }}"
+
+  - name: create a sudoers file for cumulus user
+    become: true
+    copy:
+      content: "cumulus ALL=(ALL) NOPASSWD:ALL"
+      dest: "/etc/sudoers.d/50-cumulus"
+
+  - name: copying authorized_key to switch
+    become: true
+    authorized_key:
+      key="{{ item }}"
+      user="cumulus"
+      manage_dir=yes
+      exclusive=yes
+    with_file:
+      - config_files/ssh/authorized_keys
+    tags: ssh_keys
+
+  - name: change cumulus user pw
+    become: true
+    user:
+      name: cumulus
+      password: "{{ pw }}"
+      update_password: always
+
+  - name: copy licence File
+    copy:
+      dest: /tmp/cumulus_lic.txt
+      content: "{{ cumulus_license_string }}"
+
+  - name: install licence
+    become: true
+    command: "cl-license -i /tmp/cumulus_lic.txt && systemctl restart switchd"
