@@ -107,7 +107,7 @@ files for further details.
   `network-orchestrator/group_vars/all.yml` to the `other_interfaces` variable.
 
   An example of such a configuration can be found in
-  `network-orchestrator/group_vars/example.all.yml`
+  `network-orchestrator/group_vars/example.all.yml`.
 
 4. If you take a look at the `sim-run.sh` script you can see a reference to a 
 file that is not currently there `network-orchestrator/simulation-run.cfg`. If 
