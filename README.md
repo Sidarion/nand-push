@@ -102,6 +102,13 @@ Run Configuration
    routing dont copy the snippet example. Please see the comments inside the example 
    files for further details.
 
+- if an interface needs custom settings, then set the interfaces as type "Other"
+  in Netbox and add the special settings to
+  `network-orchestrator/group_vars/all.yml` to the `other_interfaces` variable.
+
+  An example of such a configuration can be found in
+  `network-orchestrator/group_vars/example.all.yml`.
+
 4. If you take a look at the `sim-run.sh` script you can see a reference to a 
    file that is not currently there `network-orchestrator/simulation-run.cfg`. If 
    you want to push to a simulation environment just `cp production-run.cfg simulation-run.cfg` 
