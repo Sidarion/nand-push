@@ -177,7 +177,7 @@ iface {{ iface.name }}
 {% for vlan in configured_vlans if iface.vid == vlan.vid | string %}
 {% set _dummy = iface.update({'anycast_ip':vlan.anycast_ip,'status':vlan.status,'prefix_vrf':vlan.vrf}) %}
 {% endfor %}
-{% if device_role == 'leafs' and  iface.status == 'Active' %}
+{% if device_role == 'leafs' and iface.status is defined and iface.status == 'Active' %}
 auto {{ iface.name }}
 iface {{ iface.name }}
 {% if iface.address != None %}
