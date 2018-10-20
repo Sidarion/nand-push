@@ -8,9 +8,9 @@ repository is to configure a Clos spine leaf switching fabric on CumulusLinux.
 
 Components used to build the software stack:
 
- - [Netbox](https://github.com/digitalocean/netbox) (used as source of truth (sot), input device data)
+ - [Netbox](https://github.com/digitalocean/netbox) (used as source of truth (SoT), input device data)
  - [netbox-joined-inventory](https://github.com/Sidarion/netbox-joined-inventory) 
-   (get data out of sot and build YAML format variable files)
+   (get data out of SoT and build YAML format variable files)
  - Netbox Ansible Network Device - push (ansible, j2 templates to build configuration 
    files and playbooks to push them to device)
 
