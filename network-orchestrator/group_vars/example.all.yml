@@ -18,3 +18,14 @@ ntpservers:
 
 ntp_listen_interface: "eth0"
 default_timezone: "Europe/Zurich"
+
+# Non-standard or custom interface settings #
+#############################################
+# The configuration below is only applied   #
+# to interfaces that are of type "Other"    #
+#############################################
+other_interfaces:
+  leaf-DC1-01:
+    swp11:
+      - link-duplex half
+      - link-speed  100

@@ -57,6 +57,11 @@ iface {{ iface.name }}
 {% if iface.tagged_vlans %}
     bridge-vids {{ iface.tagged_vlans | ranges }}
 {% endif %}
+{% if iface.form_factor == 'Other' and other_interfaces[ansible_hostname][iface.name] is defined %}
+{% for interface_setting in other_interfaces[ansible_hostname][iface.name] %}
+    {{ interface_setting }}
+{% endfor %}
+{% endif %}
 {% if iface.form_factor == '100BASE-TX (10/100ME)' %}
     link-autoneg on
     link-speed 100
