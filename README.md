@@ -8,11 +8,11 @@ repository is to configure a Clos spine leaf switching fabric on CumulusLinux.
 
 Components used to build the software stack:
 
- - [Netbox](https://github.com/digitalocean/netbox) (used as source of truth (sot), input device data)
+ - [Netbox](https://github.com/digitalocean/netbox) (used as source of truth (SoT), input device data)
  - [netbox-joined-inventory](https://github.com/Sidarion/netbox-joined-inventory) 
- (get data out of sot and build YAML format variable files)
+   (get data out of SoT and build YAML format variable files)
  - Netbox Ansible Network Device - push (ansible, j2 templates to build configuration 
- files and playbooks to push them to device)
+   files and playbooks to push them to device)
 
 The inventory of network devices and groups created by netbox-joined-inventory does not 
 contain configuration data. Most configuration data is either stored in host 
@@ -91,39 +91,37 @@ Basic playbooks for configuring the CL switches:
 Run Configuration
 =================
 1. Prepare production or simulation environment (see above for Cumulus Linux 
-demo environment).
+   demo environment).
 
 2. Clone this repository to a system with ansible >= 2.4 installed and ideally 
-with the netbox-joined-inventory script on it.
+   with the netbox-joined-inventory script on it.
 
 3. Take a look at the example files in `network-orchestrator/group_vars` and 
-`network-orchestrator/snippets` and copy them to remove the `example.` in front 
-of the file name. Change the variables for your needs. If you dont need static 
-routing dont copy the snippet example. Please see the comments inside the example 
-files for further details.
+   `network-orchestrator/snippets` and copy them to remove the `example.` in front 
+   of the file name. Change the variables for your needs. If you dont need static 
+   routing dont copy the snippet example. Please see the comments inside the example 
+   files for further details.
 
 4. If you take a look at the `sim-run.sh` script you can see a reference to a 
-file that is not currently there `network-orchestrator/simulation-run.cfg`. If 
-you want to push to a simulation environment just `cp production-run.cfg simulation-run.cfg` 
-and change the parameters.
+   file that is not currently there `network-orchestrator/simulation-run.cfg`. If 
+   you want to push to a simulation environment just `cp production-run.cfg simulation-run.cfg` 
+   and change the parameters.
 
 Notice: Ansible can work with ssh proxies. If your simulation is not reachable outside of the 
 host try to define the following in your `simulation-run.cfg` and use your host as an ssh proxy:
 
-```
-ssh_args = -C -o ControlMaster=auto -o ProxyCommand="ssh -W %h:%p -q ansible@192.X.X.X"
-```
+    ssh_args = -C -o ControlMaster=auto -o ProxyCommand="ssh -W %h:%p -q ansible@192.X.X.X"
 
 5. Run the joined-inventory-script to get the device date from netbox. Data from the script 
-needs to be put in the following directories:
+   needs to be put in the following directories:
 
-- inventory file -> `network-orchestrator/inventories`
-- device variable files (devicename.yaml) -> `network-orchestrator/host_vars`
+   - inventory file -> `network-orchestrator/inventories`
+   - device variable files (devicename.yaml) -> `network-orchestrator/host_vars`
 
 6. run the playbooks with the `sim-run.sh` or `prod-run.sh` scripts from the root directory 
-(prefered method, paramaters might need to be changed dependent on your setup) or run the 
-playbooks `network-orchestrator/step2-deploy-simulation.yml`or `network-orchestrator/step2-deploy-simulation.yml` 
-directly (attention: ansible configuration files might not be loaded properly)
+   (prefered method, paramaters might need to be changed dependent on your setup) or run the 
+   playbooks `network-orchestrator/step2-deploy-simulation.yml`or `network-orchestrator/step2-deploy-simulation.yml` 
+   directly (attention: ansible configuration files might not be loaded properly)
 
 Data model
 ==========
