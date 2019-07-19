@@ -57,6 +57,11 @@ iface {{ iface.name }}
 {% if iface.tagged_vlans %}
     bridge-vids {{ iface.tagged_vlans | ranges }}
 {% endif %}
+{% if iface.form_factor == 'Other' and other_interfaces[ansible_hostname][iface.name] is defined %}
+{% for interface_setting in other_interfaces[ansible_hostname][iface.name] %}
+    {{ interface_setting }}
+{% endfor %}
+{% endif %}
 {% if iface.form_factor == '100BASE-TX (10/100ME)' %}
     link-autoneg on
     link-speed 100
@@ -172,7 +177,7 @@ iface {{ iface.name }}
 {% for vlan in configured_vlans if iface.vid == vlan.vid | string %}
 {% set _dummy = iface.update({'anycast_ip':vlan.anycast_ip,'status':vlan.status,'prefix_vrf':vlan.vrf}) %}
 {% endfor %}
-{% if device_role == 'leafs' and  iface.status == 'Active' %}
+{% if device_role == 'leafs' and iface.status is defined and iface.status == 'Active' %}
 auto {{ iface.name }}
 iface {{ iface.name }}
 {% if iface.address != None %}
