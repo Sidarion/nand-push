@@ -48,7 +48,9 @@ router bgp {{ bgp_as }}
 !
 {% endif %}
 {% for vrf in configured_vrfs %}
+{% if vrf.gateway %}
 ip route 0.0.0.0/0 {{ vrf.gateway}} vrf {{ vrf.name | lower }}
+{% endif %}
 {# static routes snippet #}
 {% include 'snippets/static_routing_frr.j2' ignore missing %}
 !
