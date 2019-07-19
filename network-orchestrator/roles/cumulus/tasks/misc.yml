@@ -33,7 +33,14 @@
     mode: 0644
     backup: yes
   tags: apt
-  when: cumulus_repo_file is defined and cumulus_repo_file is is_file
+  when: cumulus_repo_file is defined
+  register: apt_repository
+
+- name: execute apt-get update
+  become: true
+  apt:
+    update_cache: yes
+  when: apt_repository is defined and apt_repository.changed
 
 # ensure vxrd (Lightweight Network Virtualization Peer Discovery Daemon) is not running on any leaf or spine switch
 - name: mask and disable vxrd
