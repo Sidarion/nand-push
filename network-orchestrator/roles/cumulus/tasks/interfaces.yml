@@ -10,3 +10,4 @@
     - reload frr.service
   tags:
     - interfaces
+  register: ifacetask
