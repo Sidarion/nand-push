@@ -1,12 +1,4 @@
 ---
-- name: Update and upgrade apt packages
-  become: true
-  apt:
-    upgrade: no
-    update_cache: yes
-    cache_valid_time: 86400 #One day
-  when: update_apt_cache
-
 - name: install default packages
   become: true
   package:
