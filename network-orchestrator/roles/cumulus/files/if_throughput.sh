@@ -31,7 +31,7 @@ bar() {
   printf "$INPLACE[%-${barlength}s]" "${bar:0:n}"
 }
 
-[ "$1" == "" -o "$1" == "--help"] && help
+[ "$1" == "" -o "$1" == "--help" ] && help
 
 # input + output bandwidth in Bps
 # by default we assume 10Gbit/s = 10'000'000'000 bps
