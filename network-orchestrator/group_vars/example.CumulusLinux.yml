@@ -18,7 +18,7 @@ vagrant_gw: 192.168.121.1
 # which additional Debian packages to install on Cumulus switches #
 ###################################################################
 
-update_apt_cache: true # runs apt-get update on each switch, takes longer but installation of default packages might fail if this is not set to true
+install_packages: true
 
 default_packages:
   - vim
