@@ -18,12 +18,8 @@ SERVERS="{{ item.dhcp_relay_servers }}"
 # For example, "-i eth0 -i eth1"
 INTF_CMD="{% if item.dhcp_relay_servers != None  %}
 {# configure interfaces that take part in this VRF #}
-{% for i_vlan in configured_vlans %}
-{% if i_vlan.dhcp_relay_enabled is defined and i_vlan.dhcp_relay_enabled == True and
-   if i_vlan.vrf                is defined and i_vlan.vrf                == item.name %}
- -i vlan{{ i_vlan.vid }}
-{% endfor %}
-{% endif %}"
+{% for i_vlan in configured_vlans if i_vlan.dhcp_relay_enabled is defined and i_vlan.dhcp_relay_enabled == True %}
+{% if item.name == i_vlan.vrf  %} -i vlan{{ i_vlan.vid }}{% endif %}{% endfor %}{% endif %}"
  
 # Additional options that are passed to the DHCP relay daemon?
 OPTIONS=""
