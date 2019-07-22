@@ -69,7 +69,7 @@ iface {{ iface.name }}
 {% if iface.form_factor == 'SFP (1GE)' %}
     link-speed 1000
 {% endif %}
-{% if peerlink_bond_slaves is search(iface.name) and (cluster_role == 'master' or cluster_role == 'slave') %}
+{% if iface.name is match("|".join(peerlink_bond_slaves)) and (cluster_role == 'master' or cluster_role == 'slave') %}
 {% elif iface.lag == None %}
     mtu 9000
 {% endif %}
@@ -110,7 +110,7 @@ iface {{ vrf.name | lower }}
 {% if cluster_role == 'master' %}
 auto peerlink
 iface peerlink
-    bond-slaves {{ peerlink_bond_slaves }}
+    bond-slaves {{ peerlink_bond_slaves[0] }} {{ peerlink_bond_slaves[1] }}
     mtu 9000
 
 auto peerlink.4094
@@ -126,7 +126,7 @@ iface peerlink.4094
 {% elif cluster_role == 'slave' %}
 auto peerlink
 iface peerlink
-    bond-slaves {{ peerlink_bond_slaves }}
+    bond-slaves {{ peerlink_bond_slaves[0] }} {{ peerlink_bond_slaves[1] }}
     mtu 9000
 
 auto peerlink.4094
