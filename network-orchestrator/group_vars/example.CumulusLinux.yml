@@ -39,4 +39,4 @@ snmp_allowed_hosts: "10.0.0.0/8"
 # define bond slaves for peerlink #
 ###################################
 
-peerlink_bond_slaves: swp49 swp50 # definition of ports used for peerlinks on each switch. explanation of peer link: https://docs.cumulusnetworks.com/display/CL36/Multi-Chassis+Link+Aggregation+-+MLAG
+peerlink_bond_slaves: ['swp49', 'swp50'] # definition of ports used for peerlinks on each switch. explanation of peer link: https://docs.cumulusnetworks.com/display/CL36/Multi-Chassis+Link+Aggregation+-+MLAG
