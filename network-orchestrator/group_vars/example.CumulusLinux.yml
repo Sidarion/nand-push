@@ -32,7 +32,9 @@ install_etckeeper: true
 # apt repos #
 #############
 
-cumulus_repo_file: "config_files/cumulus/sources.list" # definition of sources if you host your own repo
+# uncomment for definition of sources if you host your own repo and make sure
+# the file is in the "files" folder in the cumulus role
+#cumulus_repo_file: sources.list
 
 # configure snmp on cumulus devices #
 #####################################
