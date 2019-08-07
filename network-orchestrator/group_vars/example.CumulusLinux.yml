@@ -4,10 +4,14 @@
 
 ansible_user: cumulus # defines what user is used by ansible
 
+# define names for the different security blocks (needs to be the same as assigned to the switches in netbox)
+securityblock1: INT
+securityblock2: DMZ
+
 # eth0 on each switch is reserved for out of band management. Set geteway to avoid asymmetric routing for management traffic.
 # define the gateway for every oob management network. The variables are used in interfaces.j2 template.
-oob_gateway_dmz: 192.168.70.1 
-oob_gateway_int: 192.168.71.1 
+oob_gateway_sb1: 192.168.70.1
+oob_gateway_sb2: 192.168.71.1 
 
 # repo and vagrant interface ips are used in interfaces.j2 template to route traffic to repo through vagrant interface #
 ########################################################################################################################
@@ -39,4 +43,5 @@ snmp_allowed_hosts: "10.0.0.0/8"
 # define bond slaves for peerlink #
 ###################################
 
-peerlink_bond_slaves: ['swp49', 'swp50'] # definition of ports used for peerlinks on each switch. explanation of peer link: https://docs.cumulusnetworks.com/display/CL36/Multi-Chassis+Link+Aggregation+-+MLAG
+# definition of ports used for peerlinks on each switch. explanation of peer link: https://docs.cumulusnetworks.com/display/CL36/Multi-Chassis+Link+Aggregation+-+MLAG
+peerlink_bond_slaves: ['swp49', 'swp50'] 
