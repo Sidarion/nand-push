@@ -12,7 +12,7 @@ repository is to configure a Clos spine leaf switching fabric on CumulusLinux.
 - The Sidarion [Cumulus role](https://galaxy.ansible.com/sidarion/cumulus) from ansible galaxy (the playbooks and templates)
 - [netbox-joined-inventory](https://github.com/Sidarion/netbox-joined-inventory)
   (get data out of SoT and build YAML format variable files)
-- Netbox](https://github.com/digitalocean/netbox) (used as source of truth (SoT), input device data)
+- [Netbox](https://github.com/digitalocean/netbox) (used as source of truth (SoT), input device data)
 
 The inventory of network devices and groups created by netbox-joined-inventory does not 
 contain configuration data. Most configuration data is either stored in host 
